@@ -1,43 +1,35 @@
 package algonquin.cst2335.commisioncalculator
 
+import algonquin.cst2335.commisioncalculator.databinding.MainActivityBinding
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import algonquin.cst2335.commisioncalculator.ui.theme.CommisionCalculatorTheme
+import android.view.KeyEvent
 
 class MainActivity : ComponentActivity() {
+    private lateinit var binding: MainActivityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            CommisionCalculatorTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android")
+        binding = MainActivityBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.editText.setOnKeyListener { view, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                val purchaseAmountStr = binding.editText.text.toString()
+                if (purchaseAmountStr.isNotEmpty()) {
+                    val purchaseAmount = purchaseAmountStr.toDouble()
+                    calculate(purchaseAmount)
                 }
+                return@setOnKeyListener true
             }
+            return@setOnKeyListener false
         }
     }
-}
+    private fun calculate(purchaseAmount: Double) {
+        val markup65 = purchaseAmount * 1.65
+        val markup70 = purchaseAmount * 1.7
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-            text = "Hello $name!",
-            modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CommisionCalculatorTheme {
-        Greeting("Android")
+        binding.percent65number.text = String.format("%.2f", markup65)
+        binding.percent70number.text = String.format("%.2f", markup70)
     }
 }
