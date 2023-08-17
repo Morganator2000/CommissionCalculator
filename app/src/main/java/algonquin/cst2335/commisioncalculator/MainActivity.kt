@@ -2,8 +2,10 @@ package algonquin.cst2335.commisioncalculator
 
 import algonquin.cst2335.commisioncalculator.databinding.MainActivityBinding
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.activity.ComponentActivity
-import android.view.KeyEvent
+import android.widget.Toast
 
 class MainActivity : ComponentActivity() {
     private lateinit var binding: MainActivityBinding
@@ -13,23 +15,43 @@ class MainActivity : ComponentActivity() {
         val view = binding.root
         setContentView(view)
 
-        binding.editText.setOnKeyListener { view, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                val purchaseAmountStr = binding.editText.text.toString()
-                if (purchaseAmountStr.isNotEmpty()) {
-                    val purchaseAmount = purchaseAmountStr.toDouble()
-                    calculate(purchaseAmount)
-                }
-                return@setOnKeyListener true
+        binding.editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
-            return@setOnKeyListener false
-        }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s.isNotBlank()) {
+                    try {
+                        val purchaseAmount = s.toString().toDouble()
+                        calculate(purchaseAmount)
+                    } catch (e: NumberFormatException) {
+                        e.printStackTrace()
+                        Toast.makeText(
+                            applicationContext,
+                            "Numbers only. Nice try.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    clear()
+                }
+            }
+        })
     }
     private fun calculate(purchaseAmount: Double) {
-        val markup65 = purchaseAmount * 1.65
-        val markup70 = purchaseAmount * 1.7
+            val markup65 = purchaseAmount * 20 / 7
+            val markup70 = purchaseAmount * 20 / 6
 
-        binding.percent65number.text = String.format("%.2f", markup65)
-        binding.percent70number.text = String.format("%.2f", markup70)
+            binding.percent65number.text = String.format("%.2f", markup65)
+            binding.percent70number.text = String.format("%.2f", markup70)
     }
+
+    private fun clear() {
+        binding.percent65number.text = "0.00"
+        binding.percent70number.text = "0.00"
+    }
+
 }
