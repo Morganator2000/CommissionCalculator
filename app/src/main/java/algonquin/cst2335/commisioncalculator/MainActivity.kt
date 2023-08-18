@@ -45,13 +45,13 @@ class MainActivity : ComponentActivity() {
             val markup65 = purchaseAmount * 20 / 7
             val markup70 = purchaseAmount * 20 / 6
 
-            binding.percent65number.text = String.format("%.2f", markup65)
-            binding.percent70number.text = String.format("%.2f", markup70)
+            binding.percent65number.text = String.format("$"+"%.2f", markup65)
+            binding.percent70number.text = String.format("$"+"%.2f", markup70)
     }
 
     private fun clear() {
-        binding.percent65number.text = "0.00"
-        binding.percent70number.text = "0.00"
+        binding.percent65number.text = "$0.00"
+        binding.percent70number.text = "$0.00"
     }
 
 }

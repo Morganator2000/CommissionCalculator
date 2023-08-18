@@ -16,6 +16,9 @@
         android:hint="Begin typing here..."
         android:minHeight="48dp"
         android:inputType="numberDecimal"
+        android:textColorHint="@color/light_grey"
+        android:textSize="12pt"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +30,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="30dp"
         android:text="Amount for 65%\nProfitability"
-        app:layout_constraintEnd_toStartOf="@+id/editText"
+        android:textSize="10pt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
 
@@ -38,8 +41,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="5dp"
         android:text="Amount for 70%\nProfitability"
+        android:textSize="10pt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editText"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
 
     <TextView
@@ -47,6 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:textSize="10pt"
         app:layout_constraintEnd_toEndOf="@+id/percent65text"
         app:layout_constraintStart_toStartOf="@+id/percent65text"
         app:layout_constraintTop_toBottomOf="@+id/percent65text" />
@@ -56,6 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:textSize="10pt"
         app:layout_constraintEnd_toEndOf="@+id/percent70text"
         app:layout_constraintStart_toStartOf="@+id/percent70text"
         app:layout_constraintTop_toBottomOf="@+id/percent70text" />
