@@ -7,6 +7,8 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.activity.ComponentActivity
 import android.widget.Toast
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class MainActivity : ComponentActivity() {
     private lateinit var binding: MainActivityBinding
@@ -15,6 +17,13 @@ class MainActivity : ComponentActivity() {
         binding = MainActivityBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        if (isBirthday()) {
+            binding.cake.visibility = View.VISIBLE
+            binding.memeText.text = "Happy Birthday Allister!"
+        } else {
+            binding.cake.visibility = View.INVISIBLE
+        }
 
         binding.editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -43,6 +52,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
         })
+    }
+    private fun isBirthday (): Boolean {
+        val dateFormat = SimpleDateFormat("MM/dd")
+        val currentDate = dateFormat.format(Date())
+        return currentDate == "03/31"
     }
     private fun calculate(purchaseAmount: Double) {
             val markup65 = purchaseAmount * 20 / 7
@@ -73,8 +87,13 @@ class MainActivity : ComponentActivity() {
             in 420.0..420.99 -> {
                 binding.memeText.text = "Blaze it!"
             }
+            in 666.0..666.99 -> {
+                binding.memeText.text = "Hey, I'm watching you."
+                binding.jesus.visibility = View.VISIBLE
+            }
             else -> {
                 binding.memeText.text = ""
+                binding.jesus.visibility = View.INVISIBLE
             }
         }
     }
