@@ -4,6 +4,7 @@ import algonquin.cst2335.commisioncalculator.databinding.MainActivityBinding
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.activity.ComponentActivity
 import android.widget.Toast
 
@@ -27,12 +28,14 @@ class MainActivity : ComponentActivity() {
                     try {
                         val purchaseAmount = s.toString().toDouble()
                         calculate(purchaseAmount)
+                        showImage(purchaseAmount * 20 / 6)
+                        checkValue(purchaseAmount)
                     } catch (e: NumberFormatException) {
                         e.printStackTrace()
                         Toast.makeText(
                             applicationContext,
-                            "Numbers only. Nice try.",
-                            Toast.LENGTH_SHORT
+                            "How did you... No, numbers only.",
+                            Toast.LENGTH_LONG
                         ).show()
                     }
                 } else {
@@ -52,6 +55,28 @@ class MainActivity : ComponentActivity() {
     private fun clear() {
         binding.percent65number.text = "$0.00"
         binding.percent70number.text = "$0.00"
+    }
+
+    private fun showImage(value: Double) {
+        if (value > 9000) {
+            binding.over9000.visibility = View.VISIBLE
+        } else {
+            binding.over9000.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun checkValue(value: Double) {
+        when (value) {
+            in 69.0..69.99 -> {
+                binding.memeText.text = "Nice!"
+            }
+            in 420.0..420.99 -> {
+                binding.memeText.text = "Blaze it!"
+            }
+            else -> {
+                binding.memeText.text = ""
+            }
+        }
     }
 
 }
